@@ -1,4 +1,4 @@
-module sample-app
+module gosample
 
 go 1.22.1
 
