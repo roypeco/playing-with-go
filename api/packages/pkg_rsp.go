@@ -6,7 +6,6 @@ import (
     "time"
     "strconv"
     "net/http"
-    "encoding/json"
     "github.com/labstack/echo/v4"
 )
 
@@ -26,13 +25,9 @@ func PlayRsp(c echo.Context) error {
     case 0:
         msg.Message = "draw"
     case 1:
-        msg.Message = "player lose"
+        msg.Message = "lose"
     default:
-        msg.Message = "player win"
+        msg.Message = "win"
     }
-    msgJson, err := json.Marshal(msg)
-	if err != nil {
-		fmt.Println(err)
-	}
-    return c.JSON(http.StatusOK, msgJson)
+    return c.JSON(http.StatusOK, msg)
 }

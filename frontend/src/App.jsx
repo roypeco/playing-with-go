@@ -11,7 +11,7 @@ const App = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setResponseData(data);
+        setResponseData(data.Message);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -20,14 +20,20 @@ const App = () => {
     fetchData();
   }, []);
 
+  // return (
+  //   <div>
+  //     <h1>Response Data:</h1>
+  //     {responseData ? (
+  //       <pre>{JSON.stringify(responseData, null, 2)}</pre>
+  //     ) : (
+  //       <p>Loading...</p>
+  //     )}
+  //   </div>
+  // );
   return (
     <div>
-      <h1>Response Data:</h1>
-      {responseData ? (
-        <pre>{JSON.stringify(responseData, null, 2)}</pre>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <h1>APIからのメッセージ:</h1>
+      <p>{responseData}</p>
     </div>
   );
 };
