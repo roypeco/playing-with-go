@@ -11,6 +11,8 @@ import (
 
 type apiResponse struct {
     Message string
+    Playerhand int
+    Cpuhand int
 }
 
 func PlayRsp(c echo.Context) error {
@@ -20,6 +22,8 @@ func PlayRsp(c echo.Context) error {
     playerHandS := c.Param("hand")
     playerHandI, _ := strconv.Atoi(playerHandS)
     cpuHand := r.Intn(3) + 1
+    msg.Playerhand = playerHandI
+    msg.Cpuhand = cpuHand
     fmt.Printf("player hand: %d, cpu hand: %d\n", playerHandI, cpuHand)
     switch (playerHandI - cpuHand + 3) % 3 {
     case 0:

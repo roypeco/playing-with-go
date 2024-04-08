@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 const App = () => {
   const [responseData, setResponseData] = useState(null);
+  const [playerHandImg, setPlayerHandImg] = useState(null);
+  const [cpuHandImg, setCpuHandImg] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,6 +14,26 @@ const App = () => {
         }
         const data = await response.json();
         setResponseData(data.Message);
+        switch (data.Playerhand){
+          case 1:
+            setPlayerHandImg('images/rock.png');
+            break;
+          case 2:
+            setPlayerHandImg('images/scissors.png');
+            break;
+          default:
+            setPlayerHandImg('images/paper.png');
+        }
+        switch (data.Cpuhand){
+          case 1:
+            setCpuHandImg('images/rock.png');
+            break;
+          case 2:
+            setCpuHandImg('images/scissors.png');
+            break;
+          default:
+            setCpuHandImg('images/paper.png');
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -22,7 +44,17 @@ const App = () => {
 
   return (
     <div>
-      <h1>Response Data:</h1>
+      <h1>RSP</h1>
+      {playerHandImg ? (
+        <img src={playerHandImg} className="playerHandImg" alt="handImg" />
+      ) : (
+        <p>No Image</p>
+      )}
+      {cpuHandImg ? (
+        <img src={cpuHandImg} className="cpuHandImg" alt="handImg" />
+      ) : (
+        <p>No Image</p>
+      )}
       {responseData ? (
         <pre>{responseData}</pre>
       ) : (
