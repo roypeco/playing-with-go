@@ -1,64 +1,67 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
+const FetchData = async (handInt) => {
+  let playerHandImg = ''
+  let cpuHandImg = ''
+  let data
+  try {
+    const response = await fetch(`http://localhost:3000/rsp/${handInt}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    data = await response.json();
+    switch (data.Playerhand){
+      case 1:
+        playerHandImg = 'images/rock.png';
+        break;
+      case 2:
+        playerHandImg = 'images/scissors.png';
+        break;
+      default:
+        playerHandImg = 'images/paper.png';
+    }
+    switch (data.Cpuhand){
+      case 1:
+        cpuHandImg = 'images/rock.png';
+        break;
+      case 2:
+        cpuHandImg = 'images/scissors.png';
+        break;
+      default:
+        cpuHandImg = 'images/paper.png';
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+  return [data.Message, playerHandImg, cpuHandImg]
+};
 
 const App = () => {
   const [responseData, setResponseData] = useState(null);
   const [playerHandImg, setPlayerHandImg] = useState(null);
   const [cpuHandImg, setCpuHandImg] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/rsp/1');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setResponseData(data.Message);
-        switch (data.Playerhand){
-          case 1:
-            setPlayerHandImg('images/rock.png');
-            break;
-          case 2:
-            setPlayerHandImg('images/scissors.png');
-            break;
-          default:
-            setPlayerHandImg('images/paper.png');
-        }
-        switch (data.Cpuhand){
-          case 1:
-            setCpuHandImg('images/rock.png');
-            break;
-          case 2:
-            setCpuHandImg('images/scissors.png');
-            break;
-          default:
-            setCpuHandImg('images/paper.png');
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const fetchDataOnClick = async (handInt) => {
+    const ary = await FetchData(handInt);
+    setResponseData(ary[0]);
+    setPlayerHandImg(ary[1]);
+    setCpuHandImg(ary[2]);
+  };
 
   return (
     <div>
-      <h1>RSP</h1>
-      {playerHandImg ? (
+      <h1>Rex RSP</h1>
+      <button className="rspbutton" onClick={() => fetchDataOnClick(1)}>Rock</button>
+      <button className="rspbutton" onClick={() => fetchDataOnClick(2)}>Scissors</button>
+      <button className="rspbutton" onClick={() => fetchDataOnClick(3)}>Paper</button>
+      {playerHandImg && (
         <img src={playerHandImg} className="playerHandImg" alt="handImg" />
-      ) : (
-        <p>No Image</p>
       )}
-      {cpuHandImg ? (
+      {cpuHandImg && (
         <img src={cpuHandImg} className="cpuHandImg" alt="handImg" />
-      ) : (
-        <p>No Image</p>
       )}
-      {responseData ? (
+      {responseData && (
         <pre>{responseData}</pre>
-      ) : (
-        <p>Loading...</p>
       )}
     </div>
   );

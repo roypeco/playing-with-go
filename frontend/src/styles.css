@@ -1,0 +1,49 @@
+.rspbutton {
+    display: inline-block;
+    width: 100%;
+    max-width: 350px; /* ボタン幅 */
+    position: relative;
+    background: #4D9BC1; /* 背景色 */
+    border: 2px solid #4D9BC1;
+    padding: 1em 2em;
+    font-weight: bold;
+    color: #fff; /* 文字色 */
+    text-decoration: none;
+    text-align: center;
+    transition-duration: 0.3s;
+  }
+  
+  .rspbutton:before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border: 0;
+    border-top: 2px solid #fff; /* 矢印の色 */
+    border-right: 2px solid #fff; /* 矢印の色 */
+    transform: rotate(45deg);
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    margin-top: -6px;
+  }
+  
+  /* マウスオーバーした際のデザイン */
+  .rspbutton:hover {
+    background: #fff; /* 背景色 */
+    color: #4D9BC1; /* 文字色 */
+  }
+  
+  .rspbutton:hover:before {
+    border-top: 2px solid #4D9BC1; /* 矢印の色 */
+    border-right: 2px solid #4D9BC1; /* 矢印の色 */
+  }
+
+  .playerHandImg{
+    width: 30%;
+    height: auto;
+  }
+  
+  .cpuHandImg{
+    width: 30%;
+    height: auto;
+  }
